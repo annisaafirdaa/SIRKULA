@@ -142,7 +142,36 @@ button.pc{font:inherit;text-align:left;width:100%;cursor:pointer;color:var(--ink
 #pinG{transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
 .pkb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--mut);justify-content:space-between}
 .sy{background:var(--bg);border:1px dashed var(--ink);border-radius:14px;padding:14px 16px;font-size:15px}
-@media(max-width:900px){.qt{grid-template-columns:1fr 1fr}}
+.pg.sb3{grid-template-columns:1.5fr 1fr 1fr}
+.rl{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px}
+.rl button{font:inherit;font-size:14px;font-weight:600;border:0;background:0;color:var(--mut);padding:7px 14px;border-radius:99px;cursor:pointer;transition:.2s}
+.rl button.on{background:var(--ink);color:var(--bg)}
+body[data-r="mitra"] nav ul,body[data-r="admin"] nav ul{display:none}
+#v-mitra,#v-admin{display:none;padding:56px 0 90px;min-height:80vh}
+.stt{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.stt div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.stt b{font:800 32px "Bricolage Grotesque",sans-serif;display:block;line-height:1.1}.stt span{font-size:13px;color:var(--mut)}
+.fc{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.fc button,.cat button{font:inherit;font-size:14px;font-weight:600;border:1.5px solid var(--ink);background:0;color:var(--ink);padding:7px 16px;border-radius:99px;cursor:pointer;transition:.2s}
+.fc button.on,.cat button.on{background:var(--ink);color:var(--bg)}
+.oc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:grid;gap:10px;margin-bottom:12px}
+.oc .t{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.bd{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--sun);color:#0d2a2a}
+.bd.s{background:var(--pri);color:var(--on)}
+.oc .row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.oc input,.oc select{font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.mut{color:var(--mut);font-size:14px}
+.fh{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:32px}
+.fh input{flex:1;min-width:220px;font:inherit;padding:14px 20px;border:2px solid var(--ink);border-radius:99px;background:var(--bg);color:var(--ink)}
+.cat{display:flex;gap:8px;flex-wrap:wrap}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;align-items:start}
+.fg2 details{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 24px;transition:transform .25s,border-color .25s,background .25s}
+.fg2 details:hover{transform:translateY(-4px);border-color:var(--pri)}
+.fg2 details[open]{background:var(--sun);color:#0d2a2a;border-color:var(--sun)}
+.fg2 details[open] p,.fg2 details[open] summary::after,.fg2 details[open] .ct2{color:#0d2a2a}
+.fg2 summary{font-size:19px;align-items:center}
+.ct2{display:block;font:700 12px "Instrument Sans",sans-serif;font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--pri);margin-bottom:6px}
+@media(max-width:900px){.qt{grid-template-columns:1fr 1fr}.pg.sb3{grid-template-columns:1fr}.fg2{grid-template-columns:1fr}.stt{grid-template-columns:1fr 1fr}.rl button{padding:7px 10px;font-size:13px}}
 @media(max-width:900px){
 section{padding:64px 0}
 .hero .w,.ct .g,.pg,.bn,.mp,.og{grid-template-columns:1fr;gap:32px}
@@ -156,8 +185,8 @@ nav ul{display:none}.chip{display:none}
 <div id="pg"></div>
 <header><div class="w"><nav>
 <button class="logo" data-v="home" data-go="atas"><i></i>SIRKULA</button>
-<ul><li><button data-v="home" data-go="peta">Peta sampah</button></li><li><button data-v="home" data-go="tarif">Tarif</button></li><li><button data-v="home" data-go="faq">Tanya jawab</button></li><li><button data-v="order">Pesanan saya</button></li></ul>
-<button class="btn sm" data-v="home" data-go="pesan">Pesan jemput</button>
+<ul><li><button data-v="home" data-go="peta">Peta sampah</button></li><li><button data-v="home" data-go="tarif">Berlangganan</button></li><li><button data-v="home" data-go="faq">Tanya jawab</button></li><li><button data-v="order">Pesanan saya</button></li></ul>
+<div class="rl" id="rl" role="group" aria-label="Pilih peran"><button class="on" data-v="home">Pemesan</button><button data-v="mitra">Pemulung</button><button data-v="admin">Admin</button></div>
 </nav></div></header>
 
 <div id="v-home">
@@ -218,16 +247,16 @@ nav ul{display:none}.chip{display:none}
 </div></section>
 
 <section id="tarif"><div class="w">
-<h2 class="rv">Tarif. Pilih, langsung pesan.</h2>
-<div class="pg">
-<button class="pc rv" data-sk="per" data-j="UMKM kuliner"><h3>UMKM kuliner</h3><div class="pr">Per jemput</div>
-<ul><li>Bayar tiap penjemputan</li><li>Ongkir sesuai jarak</li></ul><span class="go">Pesan paket ini</span></button>
-<button class="pc big rv" style="--dl:.1s" data-sk="langganan" data-j="Restoran"><h3>Hotel dan restoran</h3><div class="pr">Rp300.000<small> /bulan</small></div>
-<ul><li>Langganan bulanan</li><li>Ada batas frekuensi dan volume</li></ul><span class="go">Pesan paket ini</span></button>
+<h2 class="rv">Berlangganan.</h2>
+<div class="pg sb3">
+<button class="pc big rv" data-sk="langganan" data-j="Restoran"><h3>Langganan bulanan</h3><div class="pr">Rp300.000<small> /bulan</small></div>
+<ul><li>Untuk hotel dan restoran</li><li>Jemput 2 kali seminggu</li><li>Ongkir sudah termasuk</li><li>Laporan volume bulanan</li></ul><span class="go">Berlangganan sekarang</span></button>
+<button class="pc rv" style="--dl:.1s" data-sk="per" data-j="UMKM kuliner"><h3>Tanpa langganan</h3><div class="pr">Per jemput</div>
+<ul><li>Cocok untuk UMKM</li><li>Ongkir sesuai jarak</li></ul><span class="go">Pesan sekali</span></button>
 <button class="pc rv" style="--dl:.2s" data-sk="kolektif"><h3>Kolektif</h3><div class="pr">Terjadwal</div>
-<ul><li>Digabung per kawasan</li><li>Menekan biaya jemput</li></ul><span class="go">Pesan paket ini</span></button>
+<ul><li>Digabung per kawasan</li><li>Biaya lebih hemat</li></ul><span class="go">Pesan kolektif</span></button>
 </div>
-<h3 class="qh rv">Harga beli sampah, sesuai kualitas</h3>
+<h3 class="qh rv">Aturan harga beli sampah</h3>
 <div class="qt rv"><div><b>100%</b><span>Premium: bersih, kering, terpilah</span></div><div><b>70–90%</b><span>Standar: agak kotor atau perlu pilah ringan</span></div><div><b>0–50%</b><span>Rendah: kotor, basah, atau perlu penanganan ekstra</span></div><div><b>Tidak dibeli</b><span>Tidak layak jual. Bisa ditolak atau dikenai biaya penanganan atas persetujuan Anda.</span></div></div>
 <h3 class="qh rv">Ongkir sesuai jarak</h3>
 <div class="qt rv"><div><b>Rp10.000</b><span>0–3 km</span></div><div><b>Rp15.000</b><span>3–7 km</span></div><div><b>Rp20.000</b><span>7–10 km</span></div><div><b>Khusus</b><span>Di atas 10 km: tarif khusus atau jemput kolektif</span></div></div>
@@ -237,12 +266,10 @@ nav ul{display:none}.chip{display:none}
 
 <section id="faq" class="sb"><div class="w">
 <h2 class="rv">Tanya jawab.</h2>
-<div class="faq rv">
-<details><summary>Apa saja yang dijemput?</summary><p>Kardus, kertas, botol PET, dan logam.</p></details>
-<details><summary>Area layanan?</summary><p>Kota Surakarta. Sukoharjo dan Karanganyar menyusul.</p></details>
-<details><summary>Material harus dipilah?</summary><p>Lebih baik dipisah per jenis dan dalam keadaan bersih.</p></details>
-<details><summary>Di mana saya lihat pesanan?</summary><p>Di menu Pesanan saya. Tiket Anda tersimpan di perangkat ini.</p></details>
-</div></div></section>
+<div class="fh rv"><input id="fs" type="search" placeholder="Cari pertanyaan..." aria-label="Cari pertanyaan"><div class="cat"><button class="on" data-c="semua">Semua</button><button data-c="layanan">Layanan</button><button data-c="harga">Harga</button><button data-c="jemput">Penjemputan</button></div></div>
+<div class="fg2 rv"><details data-c="layanan"><summary><span><i class="ct2">Layanan</i>Apa saja yang dijemput?</span></summary><p>Kardus, kertas, botol PET, dan logam.</p></details><details data-c="layanan"><summary><span><i class="ct2">Layanan</i>Area layanan?</span></summary><p>Kota Surakarta. Sukoharjo dan Karanganyar menyusul.</p></details><details data-c="layanan"><summary><span><i class="ct2">Layanan</i>Apa itu langganan?</span></summary><p>Rp300.000 per bulan untuk hotel dan restoran. Ada batas frekuensi dan volume, dan ongkir sudah termasuk.</p></details><details data-c="harga"><summary><span><i class="ct2">Harga</i>Bagaimana nilai sampah dihitung?</span></summary><p>Berat bersih × harga sesuai kualitas, lalu dikurangi ongkir. Kualitas ditentukan saat penimbangan.</p></details><details data-c="harga"><summary><span><i class="ct2">Harga</i>Berapa ongkirnya?</span></summary><p>Rp10.000 untuk 0–3 km, Rp15.000 untuk 3–7 km, Rp20.000 untuk 7–10 km. Di atas 10 km tarif khusus atau kolektif.</p></details><details data-c="harga"><summary><span><i class="ct2">Harga</i>Kalau nilai sampah lebih kecil dari ongkir?</span></summary><p>Anda membayar selisihnya, atau memilih jemput kolektif agar biaya lebih hemat.</p></details><details data-c="harga"><summary><span><i class="ct2">Harga</i>Bagaimana kalau sampah tidak layak jual?</span></summary><p>Tidak dibeli. Bisa ditolak, atau dikenai biaya penanganan jika Anda setuju.</p></details><details data-c="jemput"><summary><span><i class="ct2">Penjemputan</i>Bagaimana menentukan titik jemput?</span></summary><p>Pakai lokasi Anda, tempel link atau koordinat dari Google Maps, atau ketuk peta di formulir.</p></details><details data-c="jemput"><summary><span><i class="ct2">Penjemputan</i>Apakah material harus dipilah?</span></summary><p>Lebih baik dipisah per jenis dan bersih. Makin bersih, makin tinggi harganya.</p></details><details data-c="jemput"><summary><span><i class="ct2">Penjemputan</i>Di mana saya lihat pesanan?</span></summary><p>Di menu Pesanan saya. Tiket dan statusnya ada di sana.</p></details></div>
+<p id="fn" class="mut" style="display:none;margin-top:20px">Tidak ketemu. Coba kata lain.</p>
+</div></section>
 
 <section class="ct" id="pesan"><div class="w g">
 <div><h2 class="rv">Pesan jemput sekarang.</h2><p class="sub rv">Pilih hari dan jam. Tiket langsung jadi.</p></div>
@@ -250,7 +277,9 @@ nav ul{display:none}.chip{display:none}
 <label>Nama usaha<input class="f" id="n" autocomplete="organization"></label>
 <label>Kontak (HP atau email)<input class="f" id="c" autocomplete="tel"></label>
 <label class="fw">Detail alamat atau patokan<input class="f" id="a" autocomplete="street-address" placeholder="Contoh: Jl. Slamet Riyadi 10, depan toko"></label>
-<div class="fw pk"><div class="pkb"><b style="color:var(--ink)">Titik penjemputan</b><button type="button" class="btn sm ln" id="loc">Pakai lokasi saya</button></div>
+<div class="fw pk"><div class="pkb"><b style="color:var(--ink)">Titik penjemputan</b><span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn sm ln" id="gml" href="https://www.google.com/maps/@-7.5755,110.8243,14z" target="_blank" rel="noopener">Buka Google Maps</a><button type="button" class="btn sm ln" id="loc">Pakai lokasi saya</button></span></div>
+<input class="f" id="gm" style="margin-top:8px" placeholder="Tempel link Google Maps atau koordinat, mis. -7.5755, 110.8243" aria-label="Link atau koordinat Google Maps">
+<div class="mut" style="margin-top:6px">Di Google Maps, tekan lama titik jemput, lalu salin koordinat atau bagikan linknya.</div>
 <svg id="fsvg" viewBox="0 0 510 380" role="img" aria-label="Ketuk peta untuk menentukan titik jemput">
 <polygon data-z="laweyan" points="30,140 170,110 205,215 195,320 60,290"/>
 <polygon data-z="banjarsari" points="170,110 215,35 345,25 410,85 335,165 265,205 205,215"/>
@@ -283,6 +312,9 @@ nav ul{display:none}.chip{display:none}
 <div class="cta"><button class="btn sun" data-v="home" data-go="pesan">Pesan lagi</button><button class="btn ln" data-v="home" data-go="atas">Ke beranda</button></div></div>
 </div></div></div>
 
+<div id="v-mitra"><div class="w"><h2 style="margin-bottom:28px">Pemulung.</h2><div id="mit"></div></div></div>
+<div id="v-admin"><div class="w"><h2 style="margin-bottom:28px">Admin.</h2><div id="adm"></div></div></div>
+
 <footer><div class="w"><p>SIRKULA. Layanan jemput material daur ulang.</p><p>Surakarta, Jawa Tengah</p></div></footer>
 
 <script>
@@ -304,7 +336,10 @@ if(p.dataset.k==="banjarsari")sel()});
 $("lbs").innerHTML=lbs;
 $("pb").addEventListener("click",function(){$("kc").value=this.dataset.k;go("pesan")});
 /* views */
-function show(v){$("v-home").style.display=v==="home"?"block":"none";$("v-order").style.display=v==="order"?"block":"none";if(v==="order")renderOrders()}
+var view="home";
+function show(v){view=v;["home","order","mitra","admin"].forEach(function(n){$("v-"+n).style.display=n===v?"block":"none"});document.body.dataset.r=v;
+document.querySelectorAll("#rl button").forEach(function(b){b.classList.toggle("on",b.dataset.v===v||(v==="order"&&b.dataset.v==="home"))});refresh()}
+function refresh(){if(view==="order")renderOrders();if(view==="admin")renderAdmin();if(view==="mitra")renderMitra()}
 function go(t){var e=$(t);if(e)setTimeout(function(){e.scrollIntoView({behavior:rm?"auto":"smooth"})},30)}
 document.querySelectorAll("[data-v],[data-go]").forEach(function(b){b.addEventListener("click",function(e){e.preventDefault();
 if(b.dataset.v)show(b.dataset.v);else show("home");if(b.dataset.go)go(b.dataset.go);else window.scrollTo(0,0)})});
@@ -351,7 +386,7 @@ function inArea(x,y){var r=null,pt=fs.createSVGPoint();pt.x=x;pt.y=y;fs.querySel
 function msg(t){$("pm").innerHTML="<span>"+t+"</span>"}
 function place(x,y,la,lo,must){var z=inArea(x,y);if(!z&&must){msg("Titik di luar area layanan Kota Surakarta.");return}
 pin={x:x,y:y,lat:la,lng:lo};$("pinG").setAttribute("transform","translate("+x+","+y+")");
-if(z){$("kc").value=z;msg("Pin di Kecamatan "+KC[z][0]+".")}else msg("Pin dipasang dari lokasi Anda.");upd()}
+if(z){$("kc").value=z;msg("Pin di Kecamatan "+KC[z][0]+".")}else msg("Pin dipasang dari lokasi Anda.");$("gml").href="https://www.google.com/maps?q="+la+","+lo;$("gml").textContent="Cek di Google Maps";upd()}
 fs.addEventListener("click",function(e){var pt=fs.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var q=pt.matrixTransform(fs.getScreenCTM().inverse()),g=toGeo(q.x,q.y);place(q.x,q.y,g.lat,g.lng,true)});
 $("loc").addEventListener("click",function(){if(!navigator.geolocation){msg("Perangkat tidak mendukung lokasi. Ketuk peta.");return}
 msg("Mencari lokasi Anda...");
@@ -372,11 +407,11 @@ function load(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){
 function save(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
 function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
 function tgl(s){var p=s.split("-");return new Date(p[0],p[1]-1,p[2]).toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
-function renderOrders(){var a=load(),o=cur&&a.filter(function(x){return x.id===cur})[0]||a[0];
+function renderOrders(){var a=load().filter(function(x){return MINE.indexOf(x.id)>-1}),o=cur&&a.filter(function(x){return x.id===cur})[0]||a[0];
 if(!o){$("oh").textContent="Belum ada pesanan.";$("tk").style.display="none";$("trk").innerHTML="";$("ol").innerHTML="";return}
 $("oh").textContent="Pesanan saya.";$("tk").style.display="block";
-$("tk").innerHTML='<h3>SIRKULA</h3><small>Tiket penjemputan</small><div class="r"><span>Kode</span><b>'+o.id+'</b></div><div class="r"><span>Usaha</span><span>'+esc(o.n)+'</span></div><div class="r"><span>Alamat</span><span style="text-align:right">'+esc(o.a)+', '+esc(KC[o.kc][0])+'</span></div><div class="r"><span>Material</span><span>'+esc(o.m)+', ±'+o.w+' kg</span></div><div class="r"><span>Jadwal</span><span style="text-align:right">'+tgl(o.d)+'<br>'+o.s+'</span></div>'+ticketX(o)+'<div class="st">TERJADWAL</div>';
-$("trk").innerHTML='<li class="d"><b>Pesanan dibuat</b><span>'+new Date(o.t).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})+'</span></li><li class="d"><b>Terjadwal</b><span>'+tgl(o.d)+', '+o.s+'</span></li><li><b>Dijemput</b><span>Mitra datang ke alamat Anda</span></li><li><b>Ditimbang dan dicatat</b><span>Berat final menentukan nilai</span></li><li><b>Selesai</b><span>Bukti timbang diterima</span></li>';
+$("tk").innerHTML='<h3>SIRKULA</h3><small>Tiket penjemputan</small><div class="r"><span>Kode</span><b>'+o.id+'</b></div><div class="r"><span>Usaha</span><span>'+esc(o.n)+'</span></div><div class="r"><span>Alamat</span><span style="text-align:right">'+esc(o.a)+', '+esc(KC[o.kc][0])+'</span></div><div class="r"><span>Material</span><span>'+esc(o.m)+', ±'+o.w+' kg</span></div><div class="r"><span>Jadwal</span><span style="text-align:right">'+tgl(o.d)+'<br>'+o.s+'</span></div>'+ticketX(o)+(o.final?finalX(o):"")+'<div class="st">'+stLabel(o)+'</div>';
+$("trk").innerHTML=trkHtml(o);
 $("ol").innerHTML=a.length>1?a.map(function(x){return'<button data-o="'+x.id+'" class="'+(x.id===o.id?"on":"")+'"><b>'+x.id+'</b><span>'+tgl(x.d)+'</span></button>'}).join(""):"";
 document.querySelectorAll("[data-o]").forEach(function(b){b.addEventListener("click",function(){cur=b.dataset.o;renderOrders()})})}
 function v(i){return $(i).value.trim()}
@@ -384,12 +419,77 @@ $("sb").addEventListener("click",function(){
 if(!v("n")||!v("c")||!v("a")||!v("d")||(!pin&&$("sk").value!=="langganan")){$("er").style.display="block";return}
 $("er").style.display="none";
 var o={id:"SRK-"+Date.now().toString(36).toUpperCase().slice(-5),n:v("n"),c:v("c"),a:v("a"),kc:$("kc").value,j:v("j"),m:v("m"),w:Math.max(1,parseFloat(v("w"))||1),d:v("d"),s:$("s").value,t:Date.now(),q:$("q").value,p:pin,x:calc()};
-var a=load();a.unshift(o);save(a);cur=o.id;
-try{if(window.claude&&claude.use)claude.use("db").then(function(db){if(db)return db.doc("orders/"+o.id).set(o)}).catch(function(){})}catch(e){}
+o.st="terjadwal";o.mitra="";mine(o.id);put(o);cur=o.id;
+
 if(!rm){var cl=["#f2c230","#0f5b4d","#b98b55","#e8eee9"];
 for(var i=0;i<50;i++){var p=document.createElement("i");p.className="cf";p.style.left=Math.random()*100+"vw";p.style.background=cl[i%4];p.style.animationDelay=Math.random()*.4+"s";p.style.animationDuration=1.4+Math.random()+"s";document.body.appendChild(p);setTimeout(function(x){x.remove()},3000,p)}}
-["n","c","a"].forEach(function(i){$(i).value=""});resetPin();
+["n","c","a","gm"].forEach(function(i){$(i).value=""});resetPin();
 show("order");window.scrollTo(0,0)});
+/* peran */
+var MITRA_KODE="MITRA2026";/* GANTI: kode masuk pemulung */
+var MINE=[],MIT=[],DB=null,UE=null,filt="semua",mitraNow=null,fc="semua";
+try{MINE=JSON.parse(localStorage.getItem("sirkula_mine")||"[]");MIT=JSON.parse(localStorage.getItem("sirkula_mitra")||"[]")}catch(e){}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function mine(id){MINE.unshift(id);lsSet("sirkula_mine",MINE)}
+function put(o){var a=load(),i=a.findIndex(function(x){return x.id===o.id});if(i>-1)a[i]=o;else a.unshift(o);save(a);if(DB)DB.doc("orders/"+o.id).set(o).catch(function(){})}
+var QL={prem:"Premium",std:"Standar",low:"Rendah",tolak:"Tidak layak"},ST={terjadwal:"TERJADWAL",ditugaskan:"MITRA DITUGASKAN",selesai:"SELESAI"},RG={prem:[100,100,100],std:[70,90,80],low:[0,50,25],tolak:[0,0,0]};
+function stLabel(o){return ST[o.st||"terjadwal"]}
+function fin2(f){return(f.net>=0?"terima ":"bayar ")+rp(Math.abs(f.net))}
+function finalX(o){var f=o.final;return'<div class="r"><span>Berat bersih</span><span>'+f.wb+' kg</span></div><div class="r"><span>Kualitas</span><span>'+QL[f.q]+(f.q==="tolak"?"":" ("+f.pct+"%)")+'</span></div><div class="r"><span>Nilai akhir</span><span>'+rp(f.nilai)+'</span></div><div class="r"><span>Ongkir akhir</span><span>'+rp(f.og)+'</span></div><div class="tot" style="gap:12px"><span>Akhir</span><span style="font-size:15px;text-align:right">Anda '+fin2(f)+'</span></div>'}
+function trkHtml(o){var f=o.final,l=[["Pesanan dibuat",new Date(o.t).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}),1],["Terjadwal",tgl(o.d)+", "+o.s,1],["Mitra ditugaskan",o.mitra||"Menunggu penugasan",o.st==="ditugaskan"||o.st==="selesai"],["Dijemput dan ditimbang",f?f.wb+" kg":"Mitra datang ke alamat Anda",!!f],["Selesai",f?"Anda "+fin2(f):"Bukti timbang diterima",!!f]];
+return l.map(function(x){return"<li"+(x[2]?' class="d"':"")+"><b>"+x[0]+"</b><span>"+esc(x[1])+"</span></li>"}).join("")}
+function gmu(o){return"https://www.google.com/maps?q="+o.p.lat.toFixed(5)+","+o.p.lng.toFixed(5)}
+function mitras(){var m=MIT.slice();load().forEach(function(o){if(o.mitra&&m.indexOf(o.mitra)<0)m.push(o.mitra)});return m}
+/* admin */
+function renderAdmin(){var el=$("adm");
+Promise.resolve(UE?UE.isOwner():false).catch(function(){return false}).then(function(ok){
+if(!ok){el.innerHTML='<p class="mut">Halaman admin hanya untuk pemilik SIRKULA. Buka dari akun pemilik.</p>';return}
+var a=load().sort(function(x,y){return y.t-x.t}),n=function(t){return a.filter(function(o){return(o.st||"terjadwal")===t}).length},kg=0;
+a.forEach(function(o){if(o.final)kg+=o.final.wb});
+var h='<div class="stt"><div><b>'+a.length+'</b><span>Total pesanan</span></div><div><b>'+n("terjadwal")+'</b><span>Menunggu tugas</span></div><div><b>'+n("ditugaskan")+'</b><span>Ditugaskan</span></div><div><b>'+n("selesai")+'</b><span>Selesai</span></div><div><b>'+kg.toLocaleString("id-ID")+' kg</b><span>Terkumpul</span></div></div>';
+h+='<div class="oc" style="margin-top:20px"><div class="row"><b>Mitra pemulung</b><input id="mn" placeholder="Nama mitra baru"><button class="btn sm" data-act="addm">Tambah</button></div><div class="mut">'+(mitras().map(esc).join(", ")||"Belum ada mitra.")+'</div></div>';
+h+='<div class="fc">'+["semua","terjadwal","ditugaskan","selesai"].map(function(f){return'<button data-f="'+f+'" class="'+(f===filt?"on":"")+'">'+f[0].toUpperCase()+f.slice(1)+"</button>"}).join("")+"</div>";
+var L2=a.filter(function(o){return filt==="semua"||(o.st||"terjadwal")===filt});
+h+=L2.length?L2.map(function(o){var st=o.st||"terjadwal";return'<div class="oc"><div class="t"><b>'+o.id+" | "+esc(o.n)+'</b><span class="bd'+(st==="selesai"?" s":"")+'">'+ST[st]+'</span></div><div class="mut">'+esc(o.a)+", "+esc((KC[o.kc]||[o.kc])[0])+" | "+esc(o.m)+" ±"+o.w+" kg | "+tgl(o.d)+", "+o.s+" | "+esc(o.c)+(o.p?' | <a href="'+gmu(o)+'" target="_blank" rel="noopener">Peta</a>':"")+"</div>"+
+(st==="selesai"&&o.final?"<div>Mitra "+esc(o.mitra)+" | "+o.final.wb+" kg | "+(o.final.net>=0?"bayar ke pelanggan ":"pelanggan bayar ")+rp(Math.abs(o.final.net))+"</div>":'<div class="row"><select id="as-'+o.id+'"><option value="">Pilih mitra</option>'+mitras().map(function(m){return"<option"+(m===o.mitra?" selected":"")+">"+esc(m)+"</option>"}).join("")+'</select><button class="btn sm" data-act="assign" data-id="'+o.id+'">'+(st==="ditugaskan"?"Ganti":"Tugaskan")+"</button></div>")+"</div>"}).join(""):'<p class="mut">Belum ada pesanan.</p>';
+el.innerHTML=h})}
+$("adm").addEventListener("click",function(e){var b=e.target.closest("[data-act],[data-f]");if(!b)return;
+if(b.dataset.f){filt=b.dataset.f;renderAdmin();return}
+if(b.dataset.act==="addm"){var v=$("mn").value.trim();if(v&&MIT.indexOf(v)<0){MIT.push(v);lsSet("sirkula_mitra",MIT)}renderAdmin()}
+if(b.dataset.act==="assign"){var m=$("as-"+b.dataset.id).value,o=load().filter(function(x){return x.id===b.dataset.id})[0];if(!m||!o)return;o.mitra=m;o.st="ditugaskan";put(o);renderAdmin()}});
+/* pemulung */
+function cardCalc(c){var o=load().filter(function(x){return x.id===c.dataset.o})[0],q=c.querySelector("[data-ql]").value,wb=Math.max(0,parseFloat(c.querySelector("[data-wb]").value)||0),pct=+c.querySelector("[data-pc]").value,nilai=q==="tolak"?0:Math.round(wb*1600*pct/100),og=q==="tolak"?0:((o&&o.x&&o.x.og)||0);
+return{wb:wb,q:q,pct:pct,nilai:nilai,og:og,net:nilai-og,o:o}}
+function pv(c){var f=cardCalc(c);c.querySelector("[data-po]").textContent=f.pct+"%";c.querySelector("[data-pv]").textContent="Nilai "+rp(f.nilai)+", ongkir "+rp(f.og)+": "+(f.net>=0?"bayar ke pelanggan ":"pelanggan bayar ")+rp(Math.abs(f.net))}
+function taskCard(o){return'<div class="oc" data-o="'+o.id+'"><div class="t"><b>'+o.id+" | "+esc(o.n)+'</b><span class="bd">'+tgl(o.d)+", "+o.s+'</span></div><div class="mut">'+esc(o.a)+", "+esc((KC[o.kc]||[o.kc])[0])+" | "+esc(o.m)+" ±"+o.w+" kg | "+esc(o.c)+"</div>"+(o.p?'<a class="btn sm ln" style="justify-self:start" href="'+gmu(o)+'" target="_blank" rel="noopener">Buka rute di Google Maps</a>':"")+'<div class="row"><label>Berat bersih (kg)<input type="number" min="0" step="0.1" data-wb value="'+o.w+'"></label><label>Kualitas<select data-ql><option value="prem">Premium</option><option value="std">Standar</option><option value="low">Rendah</option><option value="tolak">Tidak layak</option></select></label><label>Harga <span data-po>100%</span><input type="range" data-pc min="100" max="100" value="100" disabled></label></div><div class="mut" data-pv></div><button class="btn sun" style="justify-self:start" data-act="done" data-id="'+o.id+'">Selesai dan hitung</button></div>'}
+function renderMitra(){var el=$("mit");
+if(!mitraNow){el.innerHTML='<div class="oc" style="max-width:460px"><b>Masuk sebagai mitra</b><input id="mnm" list="dl" placeholder="Nama mitra"><datalist id="dl">'+mitras().map(function(m){return"<option>"+esc(m)+"</option>"}).join("")+'</datalist><input id="mkd" type="password" placeholder="Kode mitra"><div class="er" id="mer">Kode salah atau nama kosong.</div><button class="btn sun" style="justify-self:start" data-act="login">Masuk</button></div>';return}
+var a=load().filter(function(o){return o.mitra&&o.mitra.toLowerCase()===mitraNow.toLowerCase()}).sort(function(x,y){return x.d<y.d?-1:1}),t=a.filter(function(o){return o.st==="ditugaskan"}),d=a.filter(function(o){return o.st==="selesai"&&o.final});
+var h='<div class="t" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:20px">Halo, '+esc(mitraNow)+'</b><button class="btn sm ln" data-act="out">Keluar</button></div><div class="stt" style="grid-template-columns:repeat(3,1fr);margin-top:18px"><div><b>'+t.length+'</b><span>Tugas jemput</span></div><div><b>'+d.length+'</b><span>Selesai</span></div><div><b>'+d.reduce(function(x,o){return x+o.final.wb},0)+' kg</b><span>Terkumpul</span></div></div><h3 class="qh">Tugas jemput</h3>';
+h+=t.length?t.map(taskCard).join(""):'<p class="mut" style="margin-top:12px">Belum ada tugas.</p>';
+h+='<h3 class="qh">Riwayat</h3>'+(d.length?d.map(function(o){return'<div class="oc" style="margin-top:12px"><div class="t"><b>'+o.id+" | "+esc(o.n)+'</b><span class="bd s">SELESAI</span></div><div class="mut">'+o.final.wb+" kg, "+QL[o.final.q]+", nilai "+rp(o.final.nilai)+", ongkir "+rp(o.final.og)+"</div></div>"}).join(""):'<p class="mut" style="margin-top:12px">Belum ada riwayat.</p>');
+el.innerHTML=h;el.querySelectorAll("[data-o]").forEach(pv)}
+$("mit").addEventListener("input",function(e){var c=e.target.closest("[data-o]");if(!c)return;
+if(e.target.matches("[data-ql]")){var g=RG[e.target.value],r=c.querySelector("[data-pc]");r.min=g[0];r.max=g[1];r.value=g[2];r.disabled=g[0]===g[1]}pv(c)});
+$("mit").addEventListener("click",function(e){var b=e.target.closest("[data-act]");if(!b)return;var ac=b.dataset.act;
+if(ac==="login"){var nm=$("mnm").value.trim();if(nm&&$("mkd").value===MITRA_KODE){mitraNow=nm;renderMitra()}else $("mer").style.display="block"}
+if(ac==="out"){mitraNow=null;renderMitra()}
+if(ac==="done"){var c=b.closest("[data-o]"),f=cardCalc(c),o=f.o;if(!o||!f.wb)return;o.final={wb:f.wb,q:f.q,pct:f.pct,nilai:f.nilai,og:f.og,net:f.net};o.st="selesai";put(o);renderMitra()}});
+/* db dan peran */
+if(window.claude&&claude.use){
+claude.use("user").then(function(u){UE=u;if(view==="admin")renderAdmin()}).catch(function(){});
+claude.use("db").then(function(d){if(!d)return;DB=d;d.collection("orders").onSnapshot(function(sn){var a=load();sn.docs.forEach(function(x){var o=x.data();if(!o||!o.id)return;var i=a.findIndex(function(y){return y.id===o.id});if(i>-1)a[i]=o;else a.push(o)});save(a);refresh()},function(){})}).catch(function(){})}
+/* faq */
+var fq=document.querySelectorAll(".fg2 details");
+function ff(){var t=$("fs").value.toLowerCase(),n=0;fq.forEach(function(d){var ok=(fc==="semua"||d.dataset.c===fc)&&d.textContent.toLowerCase().indexOf(t)>-1;d.style.display=ok?"":"none";if(ok)n++});$("fn").style.display=n?"none":"block"}
+$("fs").addEventListener("input",ff);
+document.querySelectorAll(".cat button").forEach(function(b){b.addEventListener("click",function(){fc=b.dataset.c;document.querySelectorAll(".cat button").forEach(function(x){x.classList.toggle("on",x===b)});ff()})});
+/* gmaps */
+function parseGm(t){var m=t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)||t.match(/[?&](?:q|ll|query)=(-?\d+\.\d+)(?:,|%2C)(-?\d+\.\d+)/)||t.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)||t.match(/^(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)$/);return m?{lat:+m[1],lng:+m[2]}:null}
+$("gm").addEventListener("input",function(){var t=this.value.trim();if(!t)return;var g=parseGm(t);
+if(!g){msg(/goo\.gl|maps\.app/.test(t)?"Link pendek tidak bisa dibaca. Buka linknya, lalu salin koordinat atau link panjang dari bilah alamat.":"Format belum dikenali. Tempel link Google Maps atau koordinat.");return}
+var xy=toXY(g.lat,g.lng);if(xy.x<30||xy.x>480||xy.y<25||xy.y>350){msg("Titik di luar area layanan Kota Surakarta.");return}
+place(xy.x,xy.y,g.lat,g.lng,false)});
 })();
 </script>
 </body>
