@@ -143,6 +143,9 @@ button.pc{font:inherit;text-align:left;width:100%;cursor:pointer;color:var(--ink
 .pkb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--mut);justify-content:space-between}
 .sy{background:var(--bg);border:1px dashed var(--ink);border-radius:14px;padding:14px 16px;font-size:15px}
 .pg.sb3{grid-template-columns:1.5fr 1fr 1fr}
+.rb{display:flex;align-items:center;gap:14px;padding-bottom:10px;font-size:14px;font-weight:600;color:var(--mut)}
+.rb .rl{flex:1;max-width:440px}
+.rl button{flex:1}
 .rl{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px}
 .rl button{font:inherit;font-size:14px;font-weight:600;border:0;background:0;color:var(--mut);padding:7px 14px;border-radius:99px;cursor:pointer;transition:.2s}
 .rl button.on{background:var(--ink);color:var(--bg)}
@@ -186,8 +189,8 @@ nav ul{display:none}.chip{display:none}
 <header><div class="w"><nav>
 <button class="logo" data-v="home" data-go="atas"><i></i>SIRKULA</button>
 <ul><li><button data-v="home" data-go="peta">Peta sampah</button></li><li><button data-v="home" data-go="tarif">Berlangganan</button></li><li><button data-v="home" data-go="faq">Tanya jawab</button></li><li><button data-v="order">Pesanan saya</button></li></ul>
-<div class="rl" id="rl" role="group" aria-label="Pilih peran"><button class="on" data-v="home">Pemesan</button><button data-v="mitra">Pemulung</button><button data-v="admin">Admin</button></div>
-</nav></div></header>
+
+</nav></div><div class="w rb"><span>Lihat sebagai</span><div class="rl" id="rl" role="group" aria-label="Pilih peran"><button class="on" data-v="home">Pemesan</button><button data-v="mitra">Pemulung</button><button data-v="admin">Admin</button></div></div></header>
 
 <div id="v-home">
 <main id="atas">
