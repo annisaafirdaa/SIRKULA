@@ -143,6 +143,14 @@ button.pc{font:inherit;text-align:left;width:100%;cursor:pointer;color:var(--ink
 .pkb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--mut);justify-content:space-between}
 .sy{background:var(--bg);border:1px dashed var(--ink);border-radius:14px;padding:14px 16px;font-size:15px}
 .pg.sb3{grid-template-columns:1.5fr 1fr 1fr}
+.lgn{min-height:62vh;display:grid;place-items:center}
+.lc{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:40px 34px;display:grid;gap:14px;text-align:center;box-shadow:0 30px 60px -34px rgba(0,0,0,.5)}
+.lc i{width:44px;height:44px;border-radius:50%;border:9px solid var(--pri);border-right-color:var(--sun);display:block;margin:0 auto 4px;animation:spin 6s linear infinite}
+.lc h3{font-size:30px}.lc p{color:var(--mut);font-size:15px}
+.lc input{font:inherit;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);text-align:center;width:100%}
+.lc input:focus{outline:0;border-color:var(--pri);box-shadow:0 0 0 4px color-mix(in srgb,var(--sun) 55%,transparent)}
+.lc .btn{width:100%}
+.shk{animation:shk .4s}@keyframes shk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .rb{display:flex;align-items:center;gap:14px;padding-bottom:10px;font-size:14px;font-weight:600;color:var(--mut)}
 .rb .rl{flex:1;max-width:440px}
 .rl button{flex:1}
@@ -315,8 +323,8 @@ nav ul{display:none}.chip{display:none}
 <div class="cta"><button class="btn sun" data-v="home" data-go="pesan">Pesan lagi</button><button class="btn ln" data-v="home" data-go="atas">Ke beranda</button></div></div>
 </div></div></div>
 
-<div id="v-mitra"><div class="w"><h2 style="margin-bottom:28px">Pemulung.</h2><div id="mit"></div></div></div>
-<div id="v-admin"><div class="w"><h2 style="margin-bottom:28px">Admin.</h2><div id="adm"></div></div></div>
+<div id="v-mitra"><div class="w"><h2 id="hm" style="margin-bottom:28px">Pemulung.</h2><div id="mit"></div></div></div>
+<div id="v-admin"><div class="w"><h2 id="ha" style="margin-bottom:28px">Admin.</h2><div id="adm"></div></div></div>
 
 <footer><div class="w"><p>SIRKULA. Layanan jemput material daur ulang.</p><p>Surakarta, Jawa Tengah</p></div></footer>
 
@@ -430,6 +438,7 @@ for(var i=0;i<50;i++){var p=document.createElement("i");p.className="cf";p.style
 show("order");window.scrollTo(0,0)});
 /* peran */
 var MITRA_KODE="MITRA2026";/* GANTI: kode masuk pemulung */
+var ADMIN_KODE="SIRKULA-ADMIN-26",adminOK=false;/* GANTI: kode masuk admin */
 var MINE=[],MIT=[],DB=null,UE=null,filt="semua",mitraNow=null,fc="semua";
 try{MINE=JSON.parse(localStorage.getItem("sirkula_mine")||"[]");MIT=JSON.parse(localStorage.getItem("sirkula_mitra")||"[]")}catch(e){}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -445,11 +454,12 @@ function gmu(o){return"https://www.google.com/maps?q="+o.p.lat.toFixed(5)+","+o.
 function mitras(){var m=MIT.slice();load().forEach(function(o){if(o.mitra&&m.indexOf(o.mitra)<0)m.push(o.mitra)});return m}
 /* admin */
 function renderAdmin(){var el=$("adm");
-Promise.resolve(UE?UE.isOwner():false).catch(function(){return false}).then(function(ok){
-if(!ok){el.innerHTML='<p class="mut">Halaman admin hanya untuk pemilik SIRKULA. Buka dari akun pemilik.</p>';return}
+Promise.resolve(adminOK||(UE?UE.isOwner():false)).catch(function(){return false}).then(function(ok){
+$("ha").style.display=ok?"block":"none";
+if(!ok){el.innerHTML='<div class="lgn"><div class="lc" id="alc"><i></i><h3>Masuk Admin</h3><p>Kelola pesanan dan tugaskan mitra.</p><input id="akd" type="password" placeholder="Kode admin" autocomplete="current-password"><div class="er" id="aer">Kode salah.</div><button class="btn sun" data-act="alogin">Masuk</button></div></div>';return}
 var a=load().sort(function(x,y){return y.t-x.t}),n=function(t){return a.filter(function(o){return(o.st||"terjadwal")===t}).length},kg=0;
 a.forEach(function(o){if(o.final)kg+=o.final.wb});
-var h='<div class="stt"><div><b>'+a.length+'</b><span>Total pesanan</span></div><div><b>'+n("terjadwal")+'</b><span>Menunggu tugas</span></div><div><b>'+n("ditugaskan")+'</b><span>Ditugaskan</span></div><div><b>'+n("selesai")+'</b><span>Selesai</span></div><div><b>'+kg.toLocaleString("id-ID")+' kg</b><span>Terkumpul</span></div></div>';
+var h=(adminOK?'<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button class="btn sm ln" data-act="aout">Keluar</button></div>':"")+'<div class="stt"><div><b>'+a.length+'</b><span>Total pesanan</span></div><div><b>'+n("terjadwal")+'</b><span>Menunggu tugas</span></div><div><b>'+n("ditugaskan")+'</b><span>Ditugaskan</span></div><div><b>'+n("selesai")+'</b><span>Selesai</span></div><div><b>'+kg.toLocaleString("id-ID")+' kg</b><span>Terkumpul</span></div></div>';
 h+='<div class="oc" style="margin-top:20px"><div class="row"><b>Mitra pemulung</b><input id="mn" placeholder="Nama mitra baru"><button class="btn sm" data-act="addm">Tambah</button></div><div class="mut">'+(mitras().map(esc).join(", ")||"Belum ada mitra.")+'</div></div>';
 h+='<div class="fc">'+["semua","terjadwal","ditugaskan","selesai"].map(function(f){return'<button data-f="'+f+'" class="'+(f===filt?"on":"")+'">'+f[0].toUpperCase()+f.slice(1)+"</button>"}).join("")+"</div>";
 var L2=a.filter(function(o){return filt==="semua"||(o.st||"terjadwal")===filt});
@@ -457,6 +467,8 @@ h+=L2.length?L2.map(function(o){var st=o.st||"terjadwal";return'<div class="oc">
 (st==="selesai"&&o.final?"<div>Mitra "+esc(o.mitra)+" | "+o.final.wb+" kg | "+(o.final.net>=0?"bayar ke pelanggan ":"pelanggan bayar ")+rp(Math.abs(o.final.net))+"</div>":'<div class="row"><select id="as-'+o.id+'"><option value="">Pilih mitra</option>'+mitras().map(function(m){return"<option"+(m===o.mitra?" selected":"")+">"+esc(m)+"</option>"}).join("")+'</select><button class="btn sm" data-act="assign" data-id="'+o.id+'">'+(st==="ditugaskan"?"Ganti":"Tugaskan")+"</button></div>")+"</div>"}).join(""):'<p class="mut">Belum ada pesanan.</p>';
 el.innerHTML=h})}
 $("adm").addEventListener("click",function(e){var b=e.target.closest("[data-act],[data-f]");if(!b)return;
+if(b.dataset.act==="alogin"){if($("akd").value===ADMIN_KODE){adminOK=true;renderAdmin()}else{var c=$("alc");$("aer").style.display="block";c.classList.remove("shk");void c.offsetWidth;c.classList.add("shk")}return}
+if(b.dataset.act==="aout"){adminOK=false;renderAdmin();return}
 if(b.dataset.f){filt=b.dataset.f;renderAdmin();return}
 if(b.dataset.act==="addm"){var v=$("mn").value.trim();if(v&&MIT.indexOf(v)<0){MIT.push(v);lsSet("sirkula_mitra",MIT)}renderAdmin()}
 if(b.dataset.act==="assign"){var m=$("as-"+b.dataset.id).value,o=load().filter(function(x){return x.id===b.dataset.id})[0];if(!m||!o)return;o.mitra=m;o.st="ditugaskan";put(o);renderAdmin()}});
@@ -465,8 +477,8 @@ function cardCalc(c){var o=load().filter(function(x){return x.id===c.dataset.o})
 return{wb:wb,q:q,pct:pct,nilai:nilai,og:og,net:nilai-og,o:o}}
 function pv(c){var f=cardCalc(c);c.querySelector("[data-po]").textContent=f.pct+"%";c.querySelector("[data-pv]").textContent="Nilai "+rp(f.nilai)+", ongkir "+rp(f.og)+": "+(f.net>=0?"bayar ke pelanggan ":"pelanggan bayar ")+rp(Math.abs(f.net))}
 function taskCard(o){return'<div class="oc" data-o="'+o.id+'"><div class="t"><b>'+o.id+" | "+esc(o.n)+'</b><span class="bd">'+tgl(o.d)+", "+o.s+'</span></div><div class="mut">'+esc(o.a)+", "+esc((KC[o.kc]||[o.kc])[0])+" | "+esc(o.m)+" ±"+o.w+" kg | "+esc(o.c)+"</div>"+(o.p?'<a class="btn sm ln" style="justify-self:start" href="'+gmu(o)+'" target="_blank" rel="noopener">Buka rute di Google Maps</a>':"")+'<div class="row"><label>Berat bersih (kg)<input type="number" min="0" step="0.1" data-wb value="'+o.w+'"></label><label>Kualitas<select data-ql><option value="prem">Premium</option><option value="std">Standar</option><option value="low">Rendah</option><option value="tolak">Tidak layak</option></select></label><label>Harga <span data-po>100%</span><input type="range" data-pc min="100" max="100" value="100" disabled></label></div><div class="mut" data-pv></div><button class="btn sun" style="justify-self:start" data-act="done" data-id="'+o.id+'">Selesai dan hitung</button></div>'}
-function renderMitra(){var el=$("mit");
-if(!mitraNow){el.innerHTML='<div class="oc" style="max-width:460px"><b>Masuk sebagai mitra</b><input id="mnm" list="dl" placeholder="Nama mitra"><datalist id="dl">'+mitras().map(function(m){return"<option>"+esc(m)+"</option>"}).join("")+'</datalist><input id="mkd" type="password" placeholder="Kode mitra"><div class="er" id="mer">Kode salah atau nama kosong.</div><button class="btn sun" style="justify-self:start" data-act="login">Masuk</button></div>';return}
+function renderMitra(){var el=$("mit");$("hm").style.display=mitraNow?"block":"none";
+if(!mitraNow){el.innerHTML='<div class="lgn"><div class="lc" id="mlc"><i></i><h3>Masuk Pemulung</h3><p>Lihat tugas jemput dan catat hasil timbangan.</p><input id="mnm" list="dl" placeholder="Nama mitra" autocomplete="username"><datalist id="dl">'+mitras().map(function(m){return"<option>"+esc(m)+"</option>"}).join("")+'</datalist><input id="mkd" type="password" placeholder="Kode mitra" autocomplete="current-password"><div class="er" id="mer">Nama kosong atau kode salah.</div><button class="btn sun" data-act="login">Masuk</button></div></div>';return}
 var a=load().filter(function(o){return o.mitra&&o.mitra.toLowerCase()===mitraNow.toLowerCase()}).sort(function(x,y){return x.d<y.d?-1:1}),t=a.filter(function(o){return o.st==="ditugaskan"}),d=a.filter(function(o){return o.st==="selesai"&&o.final});
 var h='<div class="t" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:20px">Halo, '+esc(mitraNow)+'</b><button class="btn sm ln" data-act="out">Keluar</button></div><div class="stt" style="grid-template-columns:repeat(3,1fr);margin-top:18px"><div><b>'+t.length+'</b><span>Tugas jemput</span></div><div><b>'+d.length+'</b><span>Selesai</span></div><div><b>'+d.reduce(function(x,o){return x+o.final.wb},0)+' kg</b><span>Terkumpul</span></div></div><h3 class="qh">Tugas jemput</h3>';
 h+=t.length?t.map(taskCard).join(""):'<p class="mut" style="margin-top:12px">Belum ada tugas.</p>';
@@ -475,13 +487,14 @@ el.innerHTML=h;el.querySelectorAll("[data-o]").forEach(pv)}
 $("mit").addEventListener("input",function(e){var c=e.target.closest("[data-o]");if(!c)return;
 if(e.target.matches("[data-ql]")){var g=RG[e.target.value],r=c.querySelector("[data-pc]");r.min=g[0];r.max=g[1];r.value=g[2];r.disabled=g[0]===g[1]}pv(c)});
 $("mit").addEventListener("click",function(e){var b=e.target.closest("[data-act]");if(!b)return;var ac=b.dataset.act;
-if(ac==="login"){var nm=$("mnm").value.trim();if(nm&&$("mkd").value===MITRA_KODE){mitraNow=nm;renderMitra()}else $("mer").style.display="block"}
+if(ac==="login"){var nm=$("mnm").value.trim();if(nm&&$("mkd").value===MITRA_KODE){mitraNow=nm;renderMitra()}else{$("mer").style.display="block";var c=$("mlc");c.classList.remove("shk");void c.offsetWidth;c.classList.add("shk")}}
 if(ac==="out"){mitraNow=null;renderMitra()}
 if(ac==="done"){var c=b.closest("[data-o]"),f=cardCalc(c),o=f.o;if(!o||!f.wb)return;o.final={wb:f.wb,q:f.q,pct:f.pct,nilai:f.nilai,og:f.og,net:f.net};o.st="selesai";put(o);renderMitra()}});
 /* db dan peran */
 if(window.claude&&claude.use){
 claude.use("user").then(function(u){UE=u;if(view==="admin")renderAdmin()}).catch(function(){});
 claude.use("db").then(function(d){if(!d)return;DB=d;d.collection("orders").onSnapshot(function(sn){var a=load();sn.docs.forEach(function(x){var o=x.data();if(!o||!o.id)return;var i=a.findIndex(function(y){return y.id===o.id});if(i>-1)a[i]=o;else a.push(o)});save(a);refresh()},function(){})}).catch(function(){})}
+["mit","adm"].forEach(function(i){$(i).addEventListener("keydown",function(e){if(e.key==="Enter"){var b=this.querySelector('[data-act="login"],[data-act="alogin"]');if(b)b.click()}})});
 /* faq */
 var fq=document.querySelectorAll(".fg2 details");
 function ff(){var t=$("fs").value.toLowerCase(),n=0;fq.forEach(function(d){var ok=(fc==="semua"||d.dataset.c===fc)&&d.textContent.toLowerCase().indexOf(t)>-1;d.style.display=ok?"":"none";if(ok)n++});$("fn").style.display=n?"none":"block"}
