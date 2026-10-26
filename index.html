@@ -127,6 +127,22 @@ input.f:focus,select:focus{outline:0;border-color:var(--pri);box-shadow:0 0 0 4p
 .ol button:hover,.ol button.on{border-color:var(--pri)}
 footer{padding:32px 0 44px;font-size:14px;color:var(--mut)}
 footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pg{grid-template-columns:repeat(3,1fr)}
+button.pc{font:inherit;text-align:left;width:100%;cursor:pointer;color:var(--ink)}
+.go{display:inline-block;margin-top:18px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.qt{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.qt div{border:1px solid var(--line);border-radius:18px;padding:20px;background:var(--card)}
+.qt b{font:800 30px "Bricolage Grotesque",sans-serif;display:block;letter-spacing:-.02em}
+.qt span{color:var(--mut);font-size:14px}
+.qh{margin-top:44px;font:700 20px "Bricolage Grotesque",sans-serif}
+.fml{margin-top:28px;padding:20px 24px;border-left:5px solid var(--sun);background:var(--card);border-radius:0 14px 14px 0;font-weight:500}
+.pk svg{width:100%;height:auto;display:block;background:var(--bg);border-radius:14px;border:1px solid var(--line);cursor:crosshair;margin:8px 0}
+.pk polygon{fill:color-mix(in srgb,var(--pri) 14%,var(--card));stroke:var(--ink);stroke-width:2;stroke-linejoin:round;transition:fill .2s}
+.pk polygon:hover{fill:color-mix(in srgb,var(--sun) 45%,var(--card))}
+#pinG{transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.pkb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--mut);justify-content:space-between}
+.sy{background:var(--bg);border:1px dashed var(--ink);border-radius:14px;padding:14px 16px;font-size:15px}
+@media(max-width:900px){.qt{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){
 section{padding:64px 0}
 .hero .w,.ct .g,.pg,.bn,.mp,.og{grid-template-columns:1fr;gap:32px}
@@ -202,13 +218,22 @@ nav ul{display:none}.chip{display:none}
 </div></section>
 
 <section id="tarif"><div class="w">
-<h2 class="rv">Tarif.</h2>
+<h2 class="rv">Tarif. Pilih, langsung pesan.</h2>
 <div class="pg">
-<div class="pc big rv"><h3>Hotel dan restoran</h3><div class="pr">Rp300.000<small> /bulan</small></div>
-<ul><li>Jemput 2 kali seminggu</li><li>Laporan bulanan</li></ul></div>
-<div class="pc rv" style="--dl:.12s"><h3>UMKM kuliner</h3><div class="pr">Rp10.000<small> /jemput</small></div>
-<ul><li>Jemput 1 kali seminggu</li><li>Tanpa kontrak</li></ul></div>
-</div></div></section>
+<button class="pc rv" data-sk="per" data-j="UMKM kuliner"><h3>UMKM kuliner</h3><div class="pr">Per jemput</div>
+<ul><li>Bayar tiap penjemputan</li><li>Ongkir sesuai jarak</li></ul><span class="go">Pesan paket ini</span></button>
+<button class="pc big rv" style="--dl:.1s" data-sk="langganan" data-j="Restoran"><h3>Hotel dan restoran</h3><div class="pr">Rp300.000<small> /bulan</small></div>
+<ul><li>Langganan bulanan</li><li>Ada batas frekuensi dan volume</li></ul><span class="go">Pesan paket ini</span></button>
+<button class="pc rv" style="--dl:.2s" data-sk="kolektif"><h3>Kolektif</h3><div class="pr">Terjadwal</div>
+<ul><li>Digabung per kawasan</li><li>Menekan biaya jemput</li></ul><span class="go">Pesan paket ini</span></button>
+</div>
+<h3 class="qh rv">Harga beli sampah, sesuai kualitas</h3>
+<div class="qt rv"><div><b>100%</b><span>Premium: bersih, kering, terpilah</span></div><div><b>70–90%</b><span>Standar: agak kotor atau perlu pilah ringan</span></div><div><b>0–50%</b><span>Rendah: kotor, basah, atau perlu penanganan ekstra</span></div><div><b>Tidak dibeli</b><span>Tidak layak jual. Bisa ditolak atau dikenai biaya penanganan atas persetujuan Anda.</span></div></div>
+<h3 class="qh rv">Ongkir sesuai jarak</h3>
+<div class="qt rv"><div><b>Rp10.000</b><span>0–3 km</span></div><div><b>Rp15.000</b><span>3–7 km</span></div><div><b>Rp20.000</b><span>7–10 km</span></div><div><b>Khusus</b><span>Di atas 10 km: tarif khusus atau jemput kolektif</span></div></div>
+<p class="fml rv">Bayar bersih = berat bersih × harga sesuai kualitas − ongkir. Jika nilai sampah lebih kecil dari ongkir, Anda membayar selisihnya atau memilih jemput kolektif.</p>
+<p class="srcn rv">Harga ditentukan oleh jenis material, berat bersih, kualitas, dan harga beli mitra daur ulang, dan diperbarui mengikuti pasar.</p>
+</div></section>
 
 <section id="faq" class="sb"><div class="w">
 <h2 class="rv">Tanya jawab.</h2>
@@ -224,14 +249,27 @@ nav ul{display:none}.chip{display:none}
 <div class="fm rv">
 <label>Nama usaha<input class="f" id="n" autocomplete="organization"></label>
 <label>Kontak (HP atau email)<input class="f" id="c" autocomplete="tel"></label>
-<label class="fw">Alamat penjemputan<input class="f" id="a" autocomplete="street-address"></label>
+<label class="fw">Detail alamat atau patokan<input class="f" id="a" autocomplete="street-address" placeholder="Contoh: Jl. Slamet Riyadi 10, depan toko"></label>
+<div class="fw pk"><div class="pkb"><b style="color:var(--ink)">Titik penjemputan</b><button type="button" class="btn sm ln" id="loc">Pakai lokasi saya</button></div>
+<svg id="fsvg" viewBox="0 0 510 380" role="img" aria-label="Ketuk peta untuk menentukan titik jemput">
+<polygon data-z="laweyan" points="30,140 170,110 205,215 195,320 60,290"/>
+<polygon data-z="banjarsari" points="170,110 215,35 345,25 410,85 335,165 265,205 205,215"/>
+<polygon data-z="jebres" points="335,165 410,85 480,150 470,265 385,300 320,240 265,205"/>
+<polygon data-z="serengan" points="205,215 265,205 285,265 260,320 195,320"/>
+<polygon data-z="pasarkliwon" points="265,205 320,240 385,300 350,350 260,320 285,265"/>
+<g id="fl"></g><rect x="302" y="245" width="10" height="10" fill="#0d2a2a"/><text class="lb" x="307" y="238" style="font-size:11px">Titik acuan</text>
+<g id="pinG" transform="translate(-100,-100)"><path d="M0,0 C-14,-16 -14,-34 0,-34 C14,-34 14,-16 0,0Z" fill="#f2c230" stroke="#0d2a2a" stroke-width="3"/><circle cx="0" cy="-22" r="5" fill="#0d2a2a"/></g></svg>
+<div class="pkb" id="pm"><span>Ketuk peta untuk menaruh pin. Bisa dipindah.</span></div></div>
 <label>Kecamatan<select id="kc"><option value="banjarsari">Banjarsari</option><option value="jebres">Jebres</option><option value="laweyan">Laweyan</option><option value="serengan">Serengan</option><option value="pasarkliwon">Pasar Kliwon</option></select></label>
 <label>Jenis usaha<select id="j"><option>UMKM kuliner</option><option>Restoran</option><option>Hotel atau akomodasi</option><option>Kos atau kantor</option></select></label>
 <label>Material<select id="m"><option>Kardus</option><option>Kertas</option><option>Botol PET</option><option>Logam</option><option>Campuran</option></select></label>
 <label>Perkiraan berat (kg)<input class="f" id="w" type="number" min="1" value="10"></label>
+<label>Kualitas<select id="q"><option value="prem">Premium: bersih, kering, terpilah</option><option value="std">Standar: agak kotor</option><option value="low">Rendah: kotor atau basah</option></select></label>
 <label>Tanggal<input class="f" id="d" type="date"></label>
 <label>Jam<select id="s"><option>08.00 – 11.00</option><option>11.00 – 14.00</option><option>14.00 – 17.00</option></select></label>
-<div class="er fw" id="er" role="alert">Lengkapi nama, kontak, alamat, dan tanggal.</div>
+<label>Skema layanan<select id="sk"><option value="per">Per penjemputan</option><option value="langganan">Langganan bulanan</option><option value="kolektif">Kolektif terjadwal</option></select></label>
+<div class="sy fw" id="sy" aria-live="polite"></div>
+<div class="er fw" id="er" role="alert">Lengkapi nama, kontak, detail alamat, tanggal, dan titik jemput di peta.</div>
 <button class="btn sun fw" id="sb" type="button">Buat tiket penjemputan</button>
 </div></div></section>
 </main>
@@ -283,6 +321,51 @@ addEventListener("scroll",function(){var d=document.documentElement;$("pg").styl
 /* tanggal */
 var dt=new Date(),iso=dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");
 $("d").min=iso;$("d").value=iso;
+/* titik jemput dan harga */
+var BASE={lat:-7.5755,lng:110.8243},pin=null,fs=$("fsvg");/* GANTI: koordinat titik timbang SIRKULA */
+function toGeo(x,y){return{lat:-7.520-(y-25)/325*0.080,lng:110.775+(x-30)/450*0.080}}
+function toXY(a,o){return{x:30+(o-110.775)/0.080*450,y:25+(-7.520-a)/0.080*325}}
+function hav(a,b){var R=6371,r=Math.PI/180,dl=(b.lat-a.lat)*r,dn=(b.lng-a.lng)*r,t=Math.pow(Math.sin(dl/2),2)+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.pow(Math.sin(dn/2),2);return 2*R*Math.asin(Math.sqrt(t))}
+function rp(n){return"Rp"+Math.round(n).toLocaleString("id-ID")}
+function fmt(n){return n>=0?"terima "+rp(n):"bayar "+rp(-n)}
+function km(d){return d.toFixed(1).replace(".",",")}
+function ongkir(d){return d<=3?10000:d<=7?15000:d<=10?20000:null}
+function calc(){var W=Math.max(1,parseFloat($("w").value)||1),q=$("q").value,sk=$("sk").value,pr={prem:[1,1],std:[.7,.9],low:[0,.5]}[q],d=pin?hav(BASE,pin):null,og=sk==="langganan"?0:(sk==="per"&&d!==null?ongkir(d):null);
+return{W:W,d:d,og:og,lo:Math.round(W*1600*pr[0]),hi:Math.round(W*1600*pr[1]),sk:sk}}
+function net(x){if(x.og==null)return"ditentukan tim";var a=x.lo-x.og,b=x.hi-x.og;return a===b?fmt(a):fmt(a)+" sampai "+fmt(b)}
+function upd(){var x=calc(),t="";
+if(!pin&&x.sk!=="langganan")t="Ketuk peta untuk menentukan titik jemput. Ongkir dihitung dari jarak.<br>";
+else{if(pin)t="Jarak ±"+km(x.d)+" km. ";
+if(x.sk==="langganan")t+="Ongkir termasuk langganan, dalam batas frekuensi dan volume. ";
+else if(x.sk==="kolektif")t+="Ongkir kolektif ditentukan saat penjadwalan. ";
+else if(x.og==null)t+="Di atas 10 km: tarif khusus atau jemput kolektif. ";
+else t+="Ongkir "+rp(x.og)+". ";t+="<br>"}
+t+="Nilai sampah "+rp(x.lo)+(x.hi>x.lo?" – "+rp(x.hi):"")+" untuk ±"+x.W+" kg.";
+if(x.og&&x.hi<x.og)t+=" Nilai di bawah ongkir: Anda bayar selisih, atau pilih kolektif.";
+if(pin||x.sk==="langganan")t+="<br><b>Pembayaran bersih: "+net(x)+"</b>";
+t+="<br><small>Kualitas final ditentukan saat penimbangan.</small>";$("sy").innerHTML=t}
+["w","q","sk"].forEach(function(i){$(i).addEventListener("input",upd)});
+var fl="";for(var kk in KC){var cc=KC[kk][2].split(",");fl+='<text class="lb" x="'+cc[0]+'" y="'+cc[1]+'" style="font-size:12px;opacity:.65">'+KC[kk][0]+'</text>'}
+$("fl").innerHTML=fl;
+function inArea(x,y){var r=null,pt=fs.createSVGPoint();pt.x=x;pt.y=y;fs.querySelectorAll("polygon").forEach(function(p){if(p.isPointInFill(pt))r=p.dataset.z});return r}
+function msg(t){$("pm").innerHTML="<span>"+t+"</span>"}
+function place(x,y,la,lo,must){var z=inArea(x,y);if(!z&&must){msg("Titik di luar area layanan Kota Surakarta.");return}
+pin={x:x,y:y,lat:la,lng:lo};$("pinG").setAttribute("transform","translate("+x+","+y+")");
+if(z){$("kc").value=z;msg("Pin di Kecamatan "+KC[z][0]+".")}else msg("Pin dipasang dari lokasi Anda.");upd()}
+fs.addEventListener("click",function(e){var pt=fs.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var q=pt.matrixTransform(fs.getScreenCTM().inverse()),g=toGeo(q.x,q.y);place(q.x,q.y,g.lat,g.lng,true)});
+$("loc").addEventListener("click",function(){if(!navigator.geolocation){msg("Perangkat tidak mendukung lokasi. Ketuk peta.");return}
+msg("Mencari lokasi Anda...");
+navigator.geolocation.getCurrentPosition(function(p){var la=p.coords.latitude,lo=p.coords.longitude,xy=toXY(la,lo);
+if(xy.x<30||xy.x>480||xy.y<25||xy.y>350){msg("Lokasi Anda di luar area layanan Kota Surakarta.");return}
+place(xy.x,xy.y,la,lo,false)},function(){msg("Lokasi tidak bisa diakses. Ketuk peta untuk menaruh pin.")},{timeout:8000})});
+function resetPin(){pin=null;$("pinG").setAttribute("transform","translate(-100,-100)");msg("Ketuk peta untuk menaruh pin. Bisa dipindah.");upd()}
+document.querySelectorAll("[data-sk]").forEach(function(b){b.addEventListener("click",function(){$("sk").value=b.dataset.sk;if(b.dataset.j)$("j").value=b.dataset.j;upd();go("pesan")})});
+function ticketX(o){var x=o.x;if(!x)return'<div class="tot"><span>Perkiraan nilai</span><span>'+rp(o.w*1600)+'</span></div>';
+var h="";if(o.p)h+='<div class="r"><span>Titik jemput</span><a href="https://www.google.com/maps?q='+o.p.lat.toFixed(5)+","+o.p.lng.toFixed(5)+'" target="_blank" rel="noopener" style="color:#0f5b4d">Lihat peta</a></div>';
+if(x.d!=null)h+='<div class="r"><span>Jarak</span><span>±'+km(x.d)+" km</span></div>";
+h+='<div class="r"><span>Skema</span><span>'+({per:"Per jemput",langganan:"Langganan",kolektif:"Kolektif"}[x.sk])+'</span></div><div class="r"><span>Ongkir</span><span>'+(x.og==null?"Ditentukan tim":x.og===0?"Termasuk langganan":rp(x.og))+'</span></div><div class="r"><span>Nilai sampah</span><span>'+rp(x.lo)+(x.hi>x.lo?" – "+rp(x.hi):"")+"</span></div>";
+return h+'<div class="tot" style="gap:12px"><span>Bersih</span><span style="text-align:right;font-size:15px">'+net(x)+"</span></div>"}
+upd();
 /* pesanan */
 var KEY="sirkula_orders",cur=null;
 function load(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}}
@@ -292,20 +375,20 @@ function tgl(s){var p=s.split("-");return new Date(p[0],p[1]-1,p[2]).toLocaleDat
 function renderOrders(){var a=load(),o=cur&&a.filter(function(x){return x.id===cur})[0]||a[0];
 if(!o){$("oh").textContent="Belum ada pesanan.";$("tk").style.display="none";$("trk").innerHTML="";$("ol").innerHTML="";return}
 $("oh").textContent="Pesanan saya.";$("tk").style.display="block";
-$("tk").innerHTML='<h3>SIRKULA</h3><small>Tiket penjemputan</small><div class="r"><span>Kode</span><b>'+o.id+'</b></div><div class="r"><span>Usaha</span><span>'+esc(o.n)+'</span></div><div class="r"><span>Alamat</span><span style="text-align:right">'+esc(o.a)+', '+esc(KC[o.kc][0])+'</span></div><div class="r"><span>Material</span><span>'+esc(o.m)+', ±'+o.w+' kg</span></div><div class="r"><span>Jadwal</span><span style="text-align:right">'+tgl(o.d)+'<br>'+o.s+'</span></div><div class="tot"><span>Perkiraan nilai</span><span>Rp'+Math.round(o.w*1600).toLocaleString("id-ID")+'</span></div><div class="st">TERJADWAL</div>';
+$("tk").innerHTML='<h3>SIRKULA</h3><small>Tiket penjemputan</small><div class="r"><span>Kode</span><b>'+o.id+'</b></div><div class="r"><span>Usaha</span><span>'+esc(o.n)+'</span></div><div class="r"><span>Alamat</span><span style="text-align:right">'+esc(o.a)+', '+esc(KC[o.kc][0])+'</span></div><div class="r"><span>Material</span><span>'+esc(o.m)+', ±'+o.w+' kg</span></div><div class="r"><span>Jadwal</span><span style="text-align:right">'+tgl(o.d)+'<br>'+o.s+'</span></div>'+ticketX(o)+'<div class="st">TERJADWAL</div>';
 $("trk").innerHTML='<li class="d"><b>Pesanan dibuat</b><span>'+new Date(o.t).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})+'</span></li><li class="d"><b>Terjadwal</b><span>'+tgl(o.d)+', '+o.s+'</span></li><li><b>Dijemput</b><span>Mitra datang ke alamat Anda</span></li><li><b>Ditimbang dan dicatat</b><span>Berat final menentukan nilai</span></li><li><b>Selesai</b><span>Bukti timbang diterima</span></li>';
 $("ol").innerHTML=a.length>1?a.map(function(x){return'<button data-o="'+x.id+'" class="'+(x.id===o.id?"on":"")+'"><b>'+x.id+'</b><span>'+tgl(x.d)+'</span></button>'}).join(""):"";
 document.querySelectorAll("[data-o]").forEach(function(b){b.addEventListener("click",function(){cur=b.dataset.o;renderOrders()})})}
 function v(i){return $(i).value.trim()}
 $("sb").addEventListener("click",function(){
-if(!v("n")||!v("c")||!v("a")||!v("d")){$("er").style.display="block";return}
+if(!v("n")||!v("c")||!v("a")||!v("d")||(!pin&&$("sk").value!=="langganan")){$("er").style.display="block";return}
 $("er").style.display="none";
-var o={id:"SRK-"+Date.now().toString(36).toUpperCase().slice(-5),n:v("n"),c:v("c"),a:v("a"),kc:$("kc").value,j:v("j"),m:v("m"),w:Math.max(1,parseFloat(v("w"))||1),d:v("d"),s:$("s").value,t:Date.now()};
+var o={id:"SRK-"+Date.now().toString(36).toUpperCase().slice(-5),n:v("n"),c:v("c"),a:v("a"),kc:$("kc").value,j:v("j"),m:v("m"),w:Math.max(1,parseFloat(v("w"))||1),d:v("d"),s:$("s").value,t:Date.now(),q:$("q").value,p:pin,x:calc()};
 var a=load();a.unshift(o);save(a);cur=o.id;
 try{if(window.claude&&claude.use)claude.use("db").then(function(db){if(db)return db.doc("orders/"+o.id).set(o)}).catch(function(){})}catch(e){}
 if(!rm){var cl=["#f2c230","#0f5b4d","#b98b55","#e8eee9"];
 for(var i=0;i<50;i++){var p=document.createElement("i");p.className="cf";p.style.left=Math.random()*100+"vw";p.style.background=cl[i%4];p.style.animationDelay=Math.random()*.4+"s";p.style.animationDuration=1.4+Math.random()+"s";document.body.appendChild(p);setTimeout(function(x){x.remove()},3000,p)}}
-["n","c","a"].forEach(function(i){$(i).value=""});
+["n","c","a"].forEach(function(i){$(i).value=""});resetPin();
 show("order");window.scrollTo(0,0)});
 })();
 </script>
