@@ -435,13 +435,16 @@ for(var i=0;i<50;i++){var p=document.createElement("i");p.className="cf";p.style
 show("order");window.scrollTo(0,0)});
 /* peran */
 var MITRA_KODE="MITRA2026";/* GANTI: kode masuk pemulung */
-var ADMIN_KODE="SIRKULA-ADMIN-26",adminOK=false;/* GANTI: kode masuk admin */
+var ADMIN_KODE="SIRKULA-ADMIN-26",adminOK=false,dbOn=false;/* GANTI: kode masuk admin */
 var MINE=[],MIT=[],DB=null,UE=null,filt="semua",mitraNow=null,fc="semua";
 try{MINE=JSON.parse(localStorage.getItem("sirkula_mine")||"[]");MIT=JSON.parse(localStorage.getItem("sirkula_mitra")||"[]")}catch(e){}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function mine(id){MINE.unshift(id);lsSet("sirkula_mine",MINE)}
 function put(o){var a=load(),i=a.findIndex(function(x){return x.id===o.id});if(i>-1)a[i]=o;else a.unshift(o);save(a);if(DB)DB.doc("orders/"+o.id).set(o).catch(function(){})}
 var QL={prem:"Premium",std:"Standar",low:"Rendah",tolak:"Tidak layak"},ST={terjadwal:"TERJADWAL",ditugaskan:"MITRA DITUGASKAN",selesai:"SELESAI"},RG={prem:[100,100,100],std:[70,90,80],low:[0,50,25],tolak:[0,0,0]};
+function regMitra(n){if(!MIT.some(function(m){return m.toLowerCase()===n.toLowerCase()})){MIT.push(n);lsSet("sirkula_mitra",MIT)}
+if(DB)DB.doc("mitra/"+n.toLowerCase().replace(/[^a-z0-9]/g,"-")).set({name:n}).catch(function(){})}
+function syncB(){return'<span class="bd'+(dbOn?" s":"")+'">'+(dbOn?"Tersambung ke database bersama":"Data hanya di perangkat ini")+"</span>"}
 function stLabel(o){return ST[o.st||"terjadwal"]}
 function fin2(f){return(f.net>=0?"terima ":"bayar ")+rp(Math.abs(f.net))}
 function finalX(o){var f=o.final;return'<div class="r"><span>Berat bersih</span><span>'+f.wb+' kg</span></div><div class="r"><span>Kualitas</span><span>'+QL[f.q]+(f.q==="tolak"?"":" ("+f.pct+"%)")+'</span></div><div class="r"><span>Nilai akhir</span><span>'+rp(f.nilai)+'</span></div><div class="r"><span>Ongkir akhir</span><span>'+rp(f.og)+'</span></div><div class="tot" style="gap:12px"><span>Akhir</span><span style="font-size:15px;text-align:right">Anda '+fin2(f)+'</span></div>'}
@@ -456,7 +459,7 @@ $("ha").style.display=ok?"block":"none";
 if(!ok){el.innerHTML='<div class="lgn"><div class="lc" id="alc"><i></i><h3>Masuk Admin</h3><p>Kelola pesanan dan tugaskan mitra.</p><input id="akd" type="password" placeholder="Kode admin" autocomplete="current-password"><div class="er" id="aer">Kode salah.</div><button class="btn sun" data-act="alogin">Masuk</button></div></div>';return}
 var a=load().sort(function(x,y){return y.t-x.t}),n=function(t){return a.filter(function(o){return(o.st||"terjadwal")===t}).length},kg=0;
 a.forEach(function(o){if(o.final)kg+=o.final.wb});
-var h=(adminOK?'<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button class="btn sm ln" data-act="aout">Keluar</button></div>':"")+'<div class="stt"><div><b>'+a.length+'</b><span>Total pesanan</span></div><div><b>'+n("terjadwal")+'</b><span>Menunggu tugas</span></div><div><b>'+n("ditugaskan")+'</b><span>Ditugaskan</span></div><div><b>'+n("selesai")+'</b><span>Selesai</span></div><div><b>'+kg.toLocaleString("id-ID")+' kg</b><span>Terkumpul</span></div></div>';
+var h='<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px">'+syncB()+(adminOK?'<button class="btn sm ln" data-act="aout">Keluar</button>':"")+'</div><div class="stt"><div><b>'+a.length+'</b><span>Total pesanan</span></div><div><b>'+n("terjadwal")+'</b><span>Menunggu tugas</span></div><div><b>'+n("ditugaskan")+'</b><span>Ditugaskan</span></div><div><b>'+n("selesai")+'</b><span>Selesai</span></div><div><b>'+kg.toLocaleString("id-ID")+' kg</b><span>Terkumpul</span></div></div>';
 h+='<div class="oc" style="margin-top:20px"><div class="row"><b>Mitra pemulung</b><input id="mn" placeholder="Nama mitra baru"><button class="btn sm" data-act="addm">Tambah</button></div><div class="mut">'+(mitras().map(esc).join(", ")||"Belum ada mitra.")+'</div></div>';
 h+='<div class="fc">'+["semua","terjadwal","ditugaskan","selesai"].map(function(f){return'<button data-f="'+f+'" class="'+(f===filt?"on":"")+'">'+f[0].toUpperCase()+f.slice(1)+"</button>"}).join("")+"</div>";
 var L2=a.filter(function(o){return filt==="semua"||(o.st||"terjadwal")===filt});
@@ -467,7 +470,7 @@ $("adm").addEventListener("click",function(e){var b=e.target.closest("[data-act]
 if(b.dataset.act==="alogin"){if($("akd").value===ADMIN_KODE){adminOK=true;renderAdmin()}else{var c=$("alc");$("aer").style.display="block";c.classList.remove("shk");void c.offsetWidth;c.classList.add("shk")}return}
 if(b.dataset.act==="aout"){adminOK=false;renderAdmin();return}
 if(b.dataset.f){filt=b.dataset.f;renderAdmin();return}
-if(b.dataset.act==="addm"){var v=$("mn").value.trim();if(v&&MIT.indexOf(v)<0){MIT.push(v);lsSet("sirkula_mitra",MIT)}renderAdmin()}
+if(b.dataset.act==="addm"){var v=$("mn").value.trim();if(v)regMitra(v);renderAdmin()}
 if(b.dataset.act==="assign"){var m=$("as-"+b.dataset.id).value,o=load().filter(function(x){return x.id===b.dataset.id})[0];if(!m||!o)return;o.mitra=m;o.st="ditugaskan";put(o);renderAdmin()}});
 /* pemulung */
 function cardCalc(c){var o=load().filter(function(x){return x.id===c.dataset.o})[0],q=c.querySelector("[data-ql]").value,wb=Math.max(0,parseFloat(c.querySelector("[data-wb]").value)||0),pct=+c.querySelector("[data-pc]").value,nilai=q==="tolak"?0:Math.round(wb*1600*pct/100),og=q==="tolak"?0:((o&&o.x&&o.x.og)||0);
@@ -477,20 +480,20 @@ function taskCard(o){return'<div class="oc" data-o="'+o.id+'"><div class="t"><b>
 function renderMitra(){var el=$("mit");$("hm").style.display=mitraNow?"block":"none";
 if(!mitraNow){el.innerHTML='<div class="lgn"><div class="lc" id="mlc"><i></i><h3>Masuk Pemulung</h3><p>Lihat tugas jemput dan catat hasil timbangan.</p><input id="mnm" list="dl" placeholder="Nama mitra" autocomplete="username"><datalist id="dl">'+mitras().map(function(m){return"<option>"+esc(m)+"</option>"}).join("")+'</datalist><input id="mkd" type="password" placeholder="Kode mitra" autocomplete="current-password"><div class="er" id="mer">Nama kosong atau kode salah.</div><button class="btn sun" data-act="login">Masuk</button></div></div>';return}
 var a=load().filter(function(o){return o.mitra&&o.mitra.toLowerCase()===mitraNow.toLowerCase()}).sort(function(x,y){return x.d<y.d?-1:1}),t=a.filter(function(o){return o.st==="ditugaskan"}),d=a.filter(function(o){return o.st==="selesai"&&o.final});
-var h='<div class="t" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:20px">Halo, '+esc(mitraNow)+'</b><button class="btn sm ln" data-act="out">Keluar</button></div><div class="stt" style="grid-template-columns:repeat(3,1fr);margin-top:18px"><div><b>'+t.length+'</b><span>Tugas jemput</span></div><div><b>'+d.length+'</b><span>Selesai</span></div><div><b>'+d.reduce(function(x,o){return x+o.final.wb},0)+' kg</b><span>Terkumpul</span></div></div><h3 class="qh">Tugas jemput</h3>';
+var h='<div class="t" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:20px">Halo, '+esc(mitraNow)+'</b>'+syncB()+'<button class="btn sm ln" data-act="out">Keluar</button></div><div class="stt" style="grid-template-columns:repeat(3,1fr);margin-top:18px"><div><b>'+t.length+'</b><span>Tugas jemput</span></div><div><b>'+d.length+'</b><span>Selesai</span></div><div><b>'+d.reduce(function(x,o){return x+o.final.wb},0)+' kg</b><span>Terkumpul</span></div></div><h3 class="qh">Tugas jemput</h3>';
 h+=t.length?t.map(taskCard).join(""):'<p class="mut" style="margin-top:12px">Belum ada tugas.</p>';
 h+='<h3 class="qh">Riwayat</h3>'+(d.length?d.map(function(o){return'<div class="oc" style="margin-top:12px"><div class="t"><b>'+o.id+" | "+esc(o.n)+'</b><span class="bd s">SELESAI</span></div><div class="mut">'+o.final.wb+" kg, "+QL[o.final.q]+", nilai "+rp(o.final.nilai)+", ongkir "+rp(o.final.og)+"</div></div>"}).join(""):'<p class="mut" style="margin-top:12px">Belum ada riwayat.</p>');
 el.innerHTML=h;el.querySelectorAll("[data-o]").forEach(pv)}
 $("mit").addEventListener("input",function(e){var c=e.target.closest("[data-o]");if(!c)return;
 if(e.target.matches("[data-ql]")){var g=RG[e.target.value],r=c.querySelector("[data-pc]");r.min=g[0];r.max=g[1];r.value=g[2];r.disabled=g[0]===g[1]}pv(c)});
 $("mit").addEventListener("click",function(e){var b=e.target.closest("[data-act]");if(!b)return;var ac=b.dataset.act;
-if(ac==="login"){var nm=$("mnm").value.trim();if(nm&&$("mkd").value===MITRA_KODE){mitraNow=nm;renderMitra()}else{$("mer").style.display="block";var c=$("mlc");c.classList.remove("shk");void c.offsetWidth;c.classList.add("shk")}}
+if(ac==="login"){var nm=$("mnm").value.trim();if(nm&&$("mkd").value===MITRA_KODE){mitraNow=nm;regMitra(nm);renderMitra()}else{$("mer").style.display="block";var c=$("mlc");c.classList.remove("shk");void c.offsetWidth;c.classList.add("shk")}}
 if(ac==="out"){mitraNow=null;renderMitra()}
 if(ac==="done"){var c=b.closest("[data-o]"),f=cardCalc(c),o=f.o;if(!o||!f.wb)return;o.final={wb:f.wb,q:f.q,pct:f.pct,nilai:f.nilai,og:f.og,net:f.net};o.st="selesai";put(o);renderMitra()}});
 /* db dan peran */
 if(window.claude&&claude.use){
 claude.use("user").then(function(u){UE=u;if(view==="admin")renderAdmin()}).catch(function(){});
-claude.use("db").then(function(d){if(!d)return;DB=d;d.collection("orders").onSnapshot(function(sn){var a=load();sn.docs.forEach(function(x){var o=x.data();if(!o||!o.id)return;var i=a.findIndex(function(y){return y.id===o.id});if(i>-1)a[i]=o;else a.push(o)});save(a);refresh()},function(){})}).catch(function(){})}
+claude.use("db").then(function(d){if(!d)return;DB=d;d.collection("orders").onSnapshot(function(sn){var a=load();sn.docs.forEach(function(x){var o=x.data();if(!o||!o.id)return;var i=a.findIndex(function(y){return y.id===o.id});if(i>-1)a[i]=o;else a.push(o)});save(a);dbOn=true;refresh()},function(){dbOn=false;refresh()});d.collection("mitra").onSnapshot(function(sn){sn.docs.forEach(function(x){var m=x.data();if(m&&m.name&&MIT.indexOf(m.name)<0)MIT.push(m.name)});lsSet("sirkula_mitra",MIT);refresh()},function(){})}).catch(function(){})}
 ["mit","adm"].forEach(function(i){$(i).addEventListener("keydown",function(e){if(e.key==="Enter"){var b=this.querySelector('[data-act="login"],[data-act="alogin"]');if(b)b.click()}})});
 /* faq */
 var fq=document.querySelectorAll(".fg2 details");
